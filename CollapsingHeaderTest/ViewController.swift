@@ -26,6 +26,10 @@ class ViewController: UIViewController {
 
 class CollapsingHeaderViewController: UIViewController {
     
+    var viewControllersArray: Array<UIViewController> = []
+    let colors: Array<UIColor> = [UIColor.red, UIColor.gray, UIColor.blue]
+    var pageControl: UIPageControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,6 +80,44 @@ class CollapsingHeaderViewController: UIViewController {
 //        setupCollectionView(tabView: tabView)
         
         // UIPageViewControllerを使ったパターン
+        let pageViewController = UIPageViewController(transitionStyle: .pageCurl,
+                                                      navigationOrientation: .vertical,
+                                                      options: nil)
+        
+        for index in 0 ..< colors.count {
+            let viewController = UIViewController()
+            viewController.view.backgroundColor = colors[index]
+            viewController.view.tag = index
+            let label = UILabel()
+            label.text = "page:" + index.description
+            label.textColor = .white
+            label.font = UIFont.boldSystemFont(ofSize: 40)
+            label.frame = self.view.frame
+            label.textAlignment = .center
+            viewController.view.addSubview(label)
+            viewControllersArray.append(viewController)
+        }
+        
+        pageViewController.setViewControllers([viewControllersArray.first!], direction: .forward, animated: true)
+        pageViewController.view.frame = view.frame
+        pageViewController.view.isUserInteractionEnabled = true
+        self.addChild(pageViewController)
+        view.addSubview(pageViewController.view)
+        pageViewController.didMove(toParent: self)
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+        
+        //PageControlの生成
+        pageControl = UIPageControl(frame: CGRect(x:0, y:self.view.frame.height - 100, width:self.view.frame.width, height:50))
+        pageControl.backgroundColor = .orange
+        
+        // PageControlするページ数を設定する.
+        pageControl.numberOfPages = colors.count
+        
+        // 現在ページを設定する.
+        pageControl.currentPage = 0
+        pageControl.isUserInteractionEnabled = true
+        view.addSubview(pageControl)
     }
     
     /// UICollectionViewを試すパターン
@@ -99,6 +141,39 @@ class CollapsingHeaderViewController: UIViewController {
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         collectionView.topAnchor.constraint(equalTo: tabView.bottomAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+    }
+}
+
+// MARK: UIPageViewController
+extension CollapsingHeaderViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    
+    //DataSourceのメソッド
+    //指定されたViewControllerの前にViewControllerを返す
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        var index = viewController.view.tag
+        pageControl.currentPage = index
+        if index == colors.count - 1{
+            return nil
+        }
+        index = index + 1
+        return viewControllersArray[index]
+    }
+
+    //DataSourceのメソッド
+    //指定されたViewControllerの前にViewControllerを返す
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        var index = viewController.view.tag
+        pageControl.currentPage = index
+        index = index - 1
+        if index < 0{
+            return nil
+        }
+        return viewControllersArray[index]
+    }
+    
+    //Viewが変更されると呼ばれる
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating: Bool, previousViewControllers: [UIViewController], transitionCompleted: Bool) {
+        print("moved")
     }
 }
 
