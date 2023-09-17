@@ -235,69 +235,7 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     }
 }
 
-//// MARK: UIPageViewController
-//extension CollapsingHeaderScrollViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-//    
-//    // 最後に選択・表示されたViewControllerの後のViewControllerを返す
-//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-//        var index = viewController.view.tag
-//        
-//        pageControl.currentPage = index
-//        if index == colors.count - 1{
-//            return nil
-//        }
-//        index = index + 1
-//        return viewControllersArray[index]
-//    }
-//
-//    // 最後に選択・表示されたViewControllerの前のViewControllerを返す
-//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-//        var index = viewController.view.tag
-//        pageControl.currentPage = index
-//        index = index - 1
-//        if index < 0{
-//            return nil
-//        }
-//        return viewControllersArray[index]
-//    }
-//    
-//    // Viewが変更されると呼ばれる（scrollViewDidScrollが呼ばれるのはこれよりも後）
-//    func pageViewController(_ pageViewController: UIPageViewController,
-//                            didFinishAnimating: Bool,
-//                            previousViewControllers: [UIViewController],
-//                            transitionCompleted: Bool) {
-//        let previousPageIndex = previousViewControllers.first!.view.tag
-//        print("---moved from Page.\(previousPageIndex)")
-//        pageViewObserver.isMoving = false
-//        if let nextPageIndex = pageViewController.viewControllers?.first!.view.tag {
-//            pageViewObserver.isMovingFrom = nextPageIndex
-//            pageControl.currentPage = nextPageIndex
-//        }
-//        Task {
-//            try await Task.sleep(nanoseconds: 100 * 1000 * 1000)
-//            print("--- 0.1 sec after move completed")
-//            isHeaderEnableToMoveWithScroll = true
-//        }
-//    }
-//    
-//    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-//        print("Previous page: \(pageViewController.viewControllers?.first!.view.tag ?? 0)")
-//        print("Next Page (pendingViewControllers.first!.view.tag): \(pendingViewControllers.first!.view.tag)")
-//        isHeaderEnableToMoveWithScroll = false
-//        pageViewObserver.isMoving = true
-//        pageViewObserver.isMovingFrom = pageViewController.viewControllers?.first!.view.tag ?? 0
-//        // ここで現在のスクロール量を遷移予定のViewControllerに渡してあげる
-//        let nextVc = pendingViewControllers.first!.view
-//        guard let nextScrollView = nextVc?.subviews.first as? UIScrollView else { return }
-//        nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
-//        // 初回表示の時にステータスバーの高さ分だけ強制的に補正されるため、0.01秒の非同期で再補正かけるようにする（根本的な解決は難しそう）
-//        Task {
-//            try await Task.sleep(nanoseconds: 10 * 1000 * 1000)
-//            nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
-//        }
-//    }
-//}
-
+// 下記不要？
 extension UIScrollView {
     
     var currentPage: Int {
