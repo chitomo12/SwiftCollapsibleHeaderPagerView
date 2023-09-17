@@ -1,31 +1,15 @@
 //
-//  ViewController.swift
+//  CollapsingHeaderScrollViewController.swift
 //  CollapsingHeaderTest
 //
-//  Created by 福田正知 on 2023/09/16.
+//  Created by 福田正知 on 2023/09/17.
 //
 
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-    
-    let collapsingHeaderViewController = CollapsingHeaderViewController()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor(cgColor: CGColor(red: 0.1, green: 0.5, blue: 0.5, alpha: 1))
-        // Do any additional setup after loading the view.
-        Task {
-            try await Task.sleep(nanoseconds: 300 * 1_000 * 1_000)
-            collapsingHeaderViewController.modalPresentationStyle = .fullScreen
-            self.present(collapsingHeaderViewController, animated: true)
-        }
-    }
-
-}
-
-// MARK: CollapsingHeaderViewController
-class CollapsingHeaderViewController: UIViewController {
+// MARK: CollapsingHeaderScrollViewController
+class CollapsingHeaderScrollViewController: UIViewController {
     
     var statusBarHeight: CGFloat = 0
     
@@ -279,7 +263,7 @@ class CollapsingHeaderViewController: UIViewController {
 }
 
 // MARK: UIScrollView
-extension CollapsingHeaderViewController: UIScrollViewDelegate {
+extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // UIPageViewControllerのscrollViewか、各ページ内のscrollViewかをIdで判定する
@@ -300,7 +284,7 @@ extension CollapsingHeaderViewController: UIScrollViewDelegate {
 }
 
 // MARK: UIPageViewController
-extension CollapsingHeaderViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension CollapsingHeaderScrollViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
     // 最後に選択・表示されたViewControllerの後のViewControllerを返す
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -363,7 +347,7 @@ extension CollapsingHeaderViewController: UIPageViewControllerDelegate, UIPageVi
 }
 
 // MARK: UICollection
-extension CollapsingHeaderViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CollapsingHeaderScrollViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
@@ -378,7 +362,7 @@ extension CollapsingHeaderViewController: UICollectionViewDataSource, UICollecti
     }
 }
 
-extension CollapsingHeaderViewController: UICollectionViewDelegateFlowLayout {
+extension CollapsingHeaderScrollViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
