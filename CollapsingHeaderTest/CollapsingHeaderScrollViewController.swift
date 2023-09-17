@@ -17,13 +17,16 @@ class CollapsingHeaderScrollViewController: UIViewController {
                                                   navigationOrientation: .horizontal,
                                                   options: nil)
     let pageViewObserver = PageViewObserver()
+    
+    let parentScrollView = UIScrollView()
+    
     var viewControllersArray: Array<UIViewController> = []
     let colors: Array<UIColor> = [UIColor.red, UIColor.gray, UIColor.blue, UIColor.systemCyan]
     
     var pageControl = UIPageControl()
     
     let headerView = UIView()
-    let headerViewHeight: CGFloat = 200
+    let headerViewHeight: CGFloat = 160
     var headerViewTopAnchor = NSLayoutConstraint()
     
     let tabView = UIStackView()
@@ -35,10 +38,8 @@ class CollapsingHeaderScrollViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        
-        // UIPageViewControllerを使ったパターン
-        setupPageViewController()
+        // UIScrollViewを一番上に持ってくるパターン
+        setupScrollView()
         
         // MARK: headerView
         headerView.frame = CGRect()
@@ -71,7 +72,8 @@ class CollapsingHeaderScrollViewController: UIViewController {
         tabView.alignment = .fill
         tabView.axis = .horizontal
         tabView.spacing = 0.0
-        tabView.backgroundColor = UIColor(cgColor: CGColor(red: 0.7, green: 0.3, blue: 0.6, alpha: 1))
+        tabView.backgroundColor = .white
+        
         view.addSubview(tabView)
         tabView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         tabView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
@@ -79,21 +81,29 @@ class CollapsingHeaderScrollViewController: UIViewController {
         tabView.heightAnchor.constraint(equalToConstant: tabViewHeight).isActive = true
         
         let button1 = TabButtonView(frame: UIView().frame)
-        button1.setup(title: "button1", tag: 1, handler: { self.makePageMoveByTab(toIndex: 1) })
+        button1.setup(title: "button1", tag: 1, handler: { self.makePageMoveByTab(toIndex: 0) })
+        button1.updateState(selectedIndex: 0)
         let button2 = TabButtonView(frame: UIView().frame)
-        button2.setup(title: "button2", tag: 2, handler: { self.makePageMoveByTab(toIndex: 2) })
+        button2.setup(title: "button2", tag: 2, handler: { self.makePageMoveByTab(toIndex: 1) })
         let button3 = TabButtonView(frame: UIView().frame)
-        button3.setup(title: "button3", tag: 3, handler: { self.makePageMoveByTab(toIndex: 3) })
+        button3.setup(title: "button3", tag: 3, handler: { self.makePageMoveByTab(toIndex: 2) })
         let button4 = TabButtonView(frame: UIView().frame)
-        button4.setup(title: "button3", tag: 4, handler: { self.makePageMoveByTab(toIndex: 4) })
+        button4.setup(title: "button4", tag: 4, handler: { self.makePageMoveByTab(toIndex: 3) })
         tabView.addArrangedSubview(button1)
         tabView.addArrangedSubview(button2)
         tabView.addArrangedSubview(button3)
         tabView.addArrangedSubview(button4)
         
+        // tabView's bottom border
+        let tabViewBottomBorder = CALayer()
+        tabViewBottomBorder.frame = CGRect(x: 0, y: tabViewHeight, width: view.frame.width, height: 1.0)
+        tabViewBottomBorder.backgroundColor = UIColor.lightGray.cgColor.copy(alpha: 0.5)
+        tabView.layer.addSublayer(tabViewBottomBorder)
+        
         // tabView Bar
         let barView = UIView()
         barView.backgroundColor = .systemMint
+        barView.layer.cornerRadius = 2
         
         barView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(barView)
@@ -102,163 +112,74 @@ class CollapsingHeaderScrollViewController: UIViewController {
         barView.bottomAnchor.constraint(equalTo: tabView.bottomAnchor, constant: 0).isActive = true
         barView.heightAnchor.constraint(equalToConstant: 4).isActive = true
         barView.widthAnchor.constraint(equalToConstant: view.frame.width / 4).isActive = true
-        
-//        // pageViewController内のviewの高さ調整
-//        changePosition((pageViewController.viewControllers?.first!)!)
     }
     
-//    /// headerViewとtabViewの高さだけコンテンツを下に下げておく
-//    private func changeScrollViewContentOffset(_ viewController: UIViewController) {
-//        guard let scrollView = viewController.view.subviews.first as? UIScrollView else { return }
-//        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-//        let offsetSize: CGFloat = self.headerViewHeight + self.tabViewHeight + statusBarHeight
-//        scrollView.contentInset = UIEdgeInsets(top: offsetSize, left: 0, bottom: 0, right: 0)
-//        scrollView.setContentOffset(CGPoint(x: 0, y: -offsetSize), animated: false)
-//    }
-    
-    /// UICollectionViewを試すパターン
-    /// - Parameters:
-    ///   - tabView: 上を合わせるtabView
-    private func setupCollectionView(tabView: UIStackView) {
-        // UICollectionViewを試すパターン
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        let collectionView = UICollectionView(frame: CGRect(),
-                                              collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = .systemCyan
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        view.addSubview(collectionView)
-        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        collectionView.topAnchor.constraint(equalTo: tabView.bottomAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        statusBarHeight = view.window!.safeAreaInsets.top
     }
-    
-    /// UIPageViewControllerで試すパターン
-    /// - Parameters:
-    ///   - tabView: 上を合わせるtabView
-    private func setupPageViewController() {
+
+    // scrollViewを試すパターン☆
+    private func setupScrollView() {
+        parentScrollView.accessibilityIdentifier = "OuterScrollView"
+        parentScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        parentScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(colors.count), height: view.frame.height)
+        parentScrollView.isPagingEnabled = true
+        parentScrollView.delegate = self
         
         for index in 0 ..< colors.count {
-            let viewController = UIViewController()
-            viewController.view.backgroundColor = colors[index]
-            viewController.view.tag = index
-            viewController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            let childScrollView = UIScrollView()
+            childScrollView.accessibilityIdentifier = "\(index)"
+            childScrollView.isPagingEnabled = false
+            childScrollView.frame = CGRect(x: view.frame.width * CGFloat(index), y: 0, width: view.frame.width, height: view.frame.height)
+            childScrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.5)
+            childScrollView.delegate = self
+            childScrollView.backgroundColor = .white
             
-            let scrollView = UIScrollView()
-            scrollView.accessibilityIdentifier = String(index)
-            scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-//            scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 500)
-            scrollView.delegate = self
-            
-            // scrollViewのコンテンツを格納するUIView。これを元にScrollView.contentSizeを決定する
-            let parentView = UIView()
-            
-            // ヘッダーで隠される領域のView
-            let emptyView = UIView()
-            emptyView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight + tabViewHeight)
-            emptyView.backgroundColor = .white
-            
-            emptyView.translatesAutoresizingMaskIntoConstraints = false
-            parentView.addSubview(emptyView)
-            emptyView.leftAnchor.constraint(equalTo: parentView.leftAnchor, constant: 0).isActive = true
-            emptyView.rightAnchor.constraint(equalTo: parentView.rightAnchor, constant: 0).isActive = true
-            emptyView.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 0).isActive = true
-            emptyView.heightAnchor.constraint(equalToConstant: headerViewHeight + tabViewHeight).isActive = true
-            
-            // labelの代わりに入れたいUIViewを入れてもらうようにする
-            let label = UILabel()
+            let boxView = UIView(frame: CGRect(x: 40, y: 10 + headerViewHeight + tabViewHeight, width: 300, height: 200))
+            boxView.backgroundColor = colors[index]
+//            boxView.translatesAutoresizingMaskIntoConstraints = false
+            childScrollView.addSubview(boxView)
+
+            let label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
             label.text = "page:" + index.description
-            label.textColor = .white
+            label.textColor = .black
             label.font = UIFont.boldSystemFont(ofSize: 40)
             label.textAlignment = .center
             
-            label.translatesAutoresizingMaskIntoConstraints = false
-            parentView.addSubview(label)
-            label.leftAnchor.constraint(equalTo: parentView.leftAnchor, constant: 0).isActive = true
-            label.rightAnchor.constraint(equalTo: parentView.rightAnchor, constant: 0).isActive = true
-            label.topAnchor.constraint(equalTo: emptyView.bottomAnchor, constant: 0).isActive = true
-            label.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
-
-            parentView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(parentView)
-            parentView.heightAnchor.constraint(equalToConstant: emptyView.frame.height + view.frame.height).isActive = true
-            parentView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+            // label.translatesAutoresizingMaskIntoConstraints = falseするとUIScrollViewが真っ白になるので一旦そのままaddSubviewする
+//            label.translatesAutoresizingMaskIntoConstraints = false
+            boxView.addSubview(label)
             
-            scrollView.contentSize = CGSize(width: view.frame.width, height: emptyView.frame.height + view.frame.height)
-            viewController.view.addSubview(scrollView)
-            viewControllersArray.append(viewController)
+            childScrollView.translatesAutoresizingMaskIntoConstraints = false
+            parentScrollView.addSubview(childScrollView)
         }
         
-        pageViewController.setViewControllers([viewControllersArray.first!], direction: .forward, animated: true)
-        pageViewController.dataSource = self
-        pageViewController.delegate = self
-        pageViewController.view.isUserInteractionEnabled = true
-        self.addChild(pageViewController)
-        view.addSubview(pageViewController.view!)
+        view.addSubview(parentScrollView)
+        parentScrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        parentScrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         
-        // pageViewController自体のScrollViewにdelegateをセットする
-        pageViewController.view.subviews.filter{ $0.isKind(of: UIScrollView.self) }
-            .forEach{
-                if let scrollView = $0 as? UIScrollView {
-                    scrollView.accessibilityIdentifier = "scrollView"
-                    scrollView.delegate = self
+        self.view.layoutSubviews()
+    }
+    
+    /// タブ選択でページ遷移するためのfunction
+    private func makePageMoveByTab(toIndex: Int) -> Void {
+        parentScrollView.setContentOffset(CGPoint(x: CGFloat(toIndex) * view.frame.width, y: 0), animated: true)
+        // Set Y offset on other pages
+        parentScrollView.subviews.filter { $0.isKind(of: UIScrollView.self) }
+            .filter { $0.accessibilityIdentifier != "OuterScrollView" }
+            .forEach {
+                if let childScrollView = $0 as? UIScrollView {
+                    childScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
                 }
             }
-        
-        /// UIPageControleを表示する場合は下のコメントアウトを解除
-        // setupPageControl()
-    }
-    
-    /// PageControlを生成
-    private func setupPageControl() {
-        pageControl = UIPageControl(frame: CGRect(x:0, y:self.view.frame.height - 100, width:self.view.frame.width, height:50))
-        pageControl.backgroundColor = .orange
-        
-        // PageControlするページ数を設定する.
-        pageControl.numberOfPages = colors.count
-        
-        // 現在ページを設定する.
-        pageControl.currentPage = 0
-        pageControl.isUserInteractionEnabled = true
-        pageControl.addAction(makePageMoveUIAction(), for: .valueChanged)
-        view.addSubview(pageControl)
-    }
-    
-    /// PageControlを操作した時に呼ぶUIActionを設定
-    private func makePageMoveUIAction() -> UIAction {
-        let action = UIAction { action in
-            let sender = action.sender as? UIPageControl
-            if let sender,
-               let currentViewController = self.pageViewController.viewControllers?.first {
-                // currentViewController.view.tag: 変化前のUIPageViewControllerのpageのindexが入る（tagにindexを与えていることが前提）
-                print("currentViewController.view.tag: \(currentViewController.view.tag)")
-                // sender.currentPage: 変化後のUIPageControlのindexが入る
-                print("sender.currentPage: \(sender.currentPage)")
-                let previousIndex = currentViewController.view.tag
-                let direction: UIPageViewController.NavigationDirection = previousIndex < sender.currentPage ? .forward : .reverse
-                let nextViewController = [self.viewControllersArray[sender.currentPage]]
-                self.pageViewController.setViewControllers(nextViewController, direction: direction, animated: true)
+        tabView.subviews.filter { $0.isKind(of: TabButtonView.self) }
+            .forEach { view in
+                if let button = view as? TabButtonView {
+                    button.updateState(selectedIndex: toIndex)
+                }
             }
-        }
-        return action
-    }
-    
-    /// PageControlを操作した時に呼ぶUIActionを設定
-    private func makePageMoveByTab(toIndex: Int) -> Void {
-        if let currentViewController = self.pageViewController.viewControllers?.first {
-            // currentViewController.view.tag: 変化前のUIPageViewControllerのpageのindexが入る（tagにindexを与えていることが前提）
-            print("currentViewController.view.tag: \(currentViewController.view.tag)")
-            let previousIndex = currentViewController.view.tag
-            let direction: UIPageViewController.NavigationDirection = previousIndex < toIndex ? .forward : .reverse
-            let nextViewController = [self.viewControllersArray[toIndex - 1]]
-            self.pageViewController.setViewControllers(nextViewController, direction: direction, animated: true)
-        }
     }
 }
 
@@ -267,113 +188,120 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // UIPageViewControllerのscrollViewか、各ページ内のscrollViewかをIdで判定する
-        debugPrint("scrollView accessibilityIdentifier: \(String(describing: scrollView.accessibilityIdentifier))")
-        if scrollView.accessibilityIdentifier != "scrollView" {
+        debugPrint("[scrollViewDidScroll] scrollView ID: \(String(describing: scrollView.accessibilityIdentifier))")
+        if scrollView.accessibilityIdentifier != "OuterScrollView" {
             // UIPageViewControllerを横移動中はこの中の処理を呼ばないようにする
             print("Inner scrollView.contentOffset: \(scrollView.contentOffset)")
             if isHeaderEnableToMoveWithScroll {
-                headerViewTopAnchor.constant = -scrollView.contentOffset.y
+                headerViewTopAnchor.constant = max(-scrollView.contentOffset.y, -headerViewHeight + statusBarHeight)
             }
-        } else {
+        } else if scrollView.accessibilityIdentifier == "OuterScrollView" {
             // PageViewController自体のUIQueuingScrollViewが呼ばれた時
-            print("PageViewController's scrollView.contentOffset: \(scrollView.contentOffset)")
-            print("pageViewController.currentPage: \(pageViewController.currentPage)")
-            barViewLeftAnchor.constant = (scrollView.contentOffset.x / 4) + CGFloat(pageViewObserver.isMovingFrom - 1) * (view.frame.width / 4)
+//            print("PageViewController's scrollView.contentOffset: \(scrollView.contentOffset)")
+//            print("pageViewController.currentPage: \(pageViewController.currentPage)")
+            barViewLeftAnchor.constant = (scrollView.contentOffset.x / 4) + CGFloat(pageViewObserver.isMovingFrom) * (view.frame.width / 4)
         }
     }
-}
-
-// MARK: UIPageViewController
-extension CollapsingHeaderScrollViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
-    // 最後に選択・表示されたViewControllerの後のViewControllerを返す
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        var index = viewController.view.tag
+    // ページネーション開始時に呼ばれる
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("---scrollViewWillBeginDragging---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
+        // 前後両ページに対して位置調整を行う
+        scrollView.subviews.filter { $0.isKind(of: UIScrollView.self) }
+            .filter { $0.accessibilityIdentifier != "OuterScrollView" }
+            .forEach {
+                if let childScrollView = $0 as? UIScrollView {
+                    childScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
+                }
+            }
+    }
+    
+    // ページネーション中に指を離したら呼ばれる
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("---scrollViewWillBeginDecelerating")
+    }
+    
+    // ページネーション完了時に呼ばれる。
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("---scrollViewDidEndDecelerating---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
         
-        pageControl.currentPage = index
-        if index == colors.count - 1{
-            return nil
-        }
-        index = index + 1
-        return viewControllersArray[index]
-    }
-
-    // 最後に選択・表示されたViewControllerの前のViewControllerを返す
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        var index = viewController.view.tag
-        pageControl.currentPage = index
-        index = index - 1
-        if index < 0{
-            return nil
-        }
-        return viewControllersArray[index]
-    }
-    
-    // Viewが変更されると呼ばれる（scrollViewDidScrollが呼ばれるのはこれよりも後）
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            didFinishAnimating: Bool,
-                            previousViewControllers: [UIViewController],
-                            transitionCompleted: Bool) {
-        let previousPageIndex = previousViewControllers.first!.view.tag
-        print("---moved from Page.\(previousPageIndex)")
-        pageViewObserver.isMoving = false
-        if let nextPageIndex = pageViewController.viewControllers?.first!.view.tag {
-            pageViewObserver.isMovingFrom = nextPageIndex
-            pageControl.currentPage = nextPageIndex
-        }
-        Task {
-            try await Task.sleep(nanoseconds: 100 * 1000 * 1000)
-            print("--- 0.1 sec after move completed")
-            isHeaderEnableToMoveWithScroll = true
-        }
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        print("Previous page: \(pageViewController.viewControllers?.first!.view.tag ?? 0)")
-        print("Next Page (pendingViewControllers.first!.view.tag): \(pendingViewControllers.first!.view.tag)")
-        isHeaderEnableToMoveWithScroll = false
-        pageViewObserver.isMoving = true
-        pageViewObserver.isMovingFrom = pageViewController.viewControllers?.first!.view.tag ?? 0
-        // ここで現在のスクロール量を遷移予定のViewControllerに渡してあげる
-        let nextVc = pendingViewControllers.first!.view
-        guard let nextScrollView = nextVc?.subviews.first as? UIScrollView else { return }
-        nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
-        // 初回表示の時にステータスバーの高さ分だけ強制的に補正されるため、0.01秒の非同期で再補正かけるようにする（根本的な解決は難しそう）
-        Task {
-            try await Task.sleep(nanoseconds: 10 * 1000 * 1000)
-            nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
-        }
+        tabView.subviews.filter { $0.isKind(of: TabButtonView.self) }
+            .forEach { view in
+                if let button = view as? TabButtonView {
+                    let currentPageIndex = scrollView.currentPage - 1
+                    button.updateState(selectedIndex: currentPageIndex)
+                }
+            }
     }
 }
 
-// MARK: UICollection
-extension CollapsingHeaderScrollViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
-        
-        return cell
-    }
-}
+//// MARK: UIPageViewController
+//extension CollapsingHeaderScrollViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+//    
+//    // 最後に選択・表示されたViewControllerの後のViewControllerを返す
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+//        var index = viewController.view.tag
+//        
+//        pageControl.currentPage = index
+//        if index == colors.count - 1{
+//            return nil
+//        }
+//        index = index + 1
+//        return viewControllersArray[index]
+//    }
+//
+//    // 最後に選択・表示されたViewControllerの前のViewControllerを返す
+//    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+//        var index = viewController.view.tag
+//        pageControl.currentPage = index
+//        index = index - 1
+//        if index < 0{
+//            return nil
+//        }
+//        return viewControllersArray[index]
+//    }
+//    
+//    // Viewが変更されると呼ばれる（scrollViewDidScrollが呼ばれるのはこれよりも後）
+//    func pageViewController(_ pageViewController: UIPageViewController,
+//                            didFinishAnimating: Bool,
+//                            previousViewControllers: [UIViewController],
+//                            transitionCompleted: Bool) {
+//        let previousPageIndex = previousViewControllers.first!.view.tag
+//        print("---moved from Page.\(previousPageIndex)")
+//        pageViewObserver.isMoving = false
+//        if let nextPageIndex = pageViewController.viewControllers?.first!.view.tag {
+//            pageViewObserver.isMovingFrom = nextPageIndex
+//            pageControl.currentPage = nextPageIndex
+//        }
+//        Task {
+//            try await Task.sleep(nanoseconds: 100 * 1000 * 1000)
+//            print("--- 0.1 sec after move completed")
+//            isHeaderEnableToMoveWithScroll = true
+//        }
+//    }
+//    
+//    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+//        print("Previous page: \(pageViewController.viewControllers?.first!.view.tag ?? 0)")
+//        print("Next Page (pendingViewControllers.first!.view.tag): \(pendingViewControllers.first!.view.tag)")
+//        isHeaderEnableToMoveWithScroll = false
+//        pageViewObserver.isMoving = true
+//        pageViewObserver.isMovingFrom = pageViewController.viewControllers?.first!.view.tag ?? 0
+//        // ここで現在のスクロール量を遷移予定のViewControllerに渡してあげる
+//        let nextVc = pendingViewControllers.first!.view
+//        guard let nextScrollView = nextVc?.subviews.first as? UIScrollView else { return }
+//        nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
+//        // 初回表示の時にステータスバーの高さ分だけ強制的に補正されるため、0.01秒の非同期で再補正かけるようにする（根本的な解決は難しそう）
+//        Task {
+//            try await Task.sleep(nanoseconds: 10 * 1000 * 1000)
+//            nextScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
+//        }
+//    }
+//}
 
-extension CollapsingHeaderScrollViewController: UICollectionViewDelegateFlowLayout {
+extension UIScrollView {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 300)
+    var currentPage: Int {
+        let currentPage = Int((self.contentOffset.x + (0.5 * self.bounds.width)) / self.bounds.width) + 1
+        return currentPage
     }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 50
-    }
-    
 }
