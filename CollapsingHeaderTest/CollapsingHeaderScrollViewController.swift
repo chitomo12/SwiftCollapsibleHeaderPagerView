@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 // MARK: CollapsingHeaderScrollViewController
-class CollapsingHeaderScrollViewController: UIViewController {
+public class CollapsingHeaderScrollViewController: UIViewController {
     
     var statusBarHeight: CGFloat = 0
     
@@ -39,24 +39,28 @@ class CollapsingHeaderScrollViewController: UIViewController {
     
     var isHeaderEnableToMoveWithScroll = true
     
-    let page = CollapsibleHeaderPagerViewPage(title: "page1", view: pageOneView)
+    var dataSource: CollapsingHeaderScrollViewControllerDatasource?
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.dataSource = self
+        
+        
 //        let headerView = createHeaderView()
         let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
+        
         setup(header: headerView, headerHeight: headerView.frame.height)
-//        setup(header: headerView, headerHeight: headerView.frame.height, tabButtons: [])
+//        setup(header: headerView, headerHeight: headerView.frame.height, pages: pages)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         statusBarHeight = view.window!.safeAreaInsets.top
     }
     
     private func createHeaderView() -> UIView {
         let headerView = UIView()
-        // MARK: headerView
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight)
         headerView.backgroundColor = UIColor(cgColor: CGColor(red: 0.8, green: 0.8, blue: 0.3, alpha: 1))
         return headerView
@@ -69,9 +73,9 @@ class CollapsingHeaderScrollViewController: UIViewController {
     private func setup(header: UIView, headerHeight: CGFloat) {
         // headerView、button、[view]を渡せばセットアップしてくれるような関数にする。buttonは何も渡されなければ[view]に基づいて適当に番号を振ったボタンを渡す。
         
-        // UIScrollViewを一番上に持ってくるパターン
         setupScrollView()
         
+        // MARK: header
         header.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(header)
         headerViewTopAnchor = header.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
@@ -94,6 +98,7 @@ class CollapsingHeaderScrollViewController: UIViewController {
         tabView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 0).isActive = true
         tabView.heightAnchor.constraint(equalToConstant: tabViewHeight).isActive = true
         
+        // MARK: tabView's buttons
         let button1 = TabButtonView(frame: UIView().frame)
         button1.setup(title: "button1", tag: 1, handler: { self.makePageMoveByTab(toIndex: 0) })
         button1.updateState(selectedIndex: 0)
@@ -128,7 +133,7 @@ class CollapsingHeaderScrollViewController: UIViewController {
         barView.widthAnchor.constraint(equalToConstant: view.frame.width / 4).isActive = true
     }
 
-    // scrollViewを試すパターン☆
+    /// set up ParentScrollView and ChildScrollViews
     private func setupScrollView() {
         parentScrollView.accessibilityIdentifier = "OuterScrollView"
         parentScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -147,22 +152,25 @@ class CollapsingHeaderScrollViewController: UIViewController {
             childScrollView.delegate = self
             childScrollView.backgroundColor = .white
             
-            let boxView = UIView(frame: CGRect(x: 40, y: 10 + headerAreaHeight, width: 300, height: view.frame.height - headerAreaHeight - 60 + 200 * CGFloat(index)))
+//            let boxView = UIView(frame: CGRect(x: 40, y: 10 + headerAreaHeight, width: 300, height: view.frame.height - headerAreaHeight - 60 + 200 * CGFloat(index)))
+            guard let boxView = self.dataSource?.collapsibleHeaderScrollViewController(self, index: index).view else { return }
             boxView.backgroundColor = colors[index]
-//            boxView.translatesAutoresizingMaskIntoConstraints = false
+            
             childScrollView.addSubview(boxView)
 
-            let label = UILabel(frame: CGRect(x: 0, y: 10, width: 300, height: 50))
-            label.text = "Page:" + index.description
+            let label = UILabel(frame: CGRect(x: 10, y: 20, width: 300, height: 50))
+//            label.text = "Page:" + index.description
+            label.text = self.dataSource?.collapsibleHeaderScrollViewController(self, index: index).title
             label.textColor = .black
             label.font = UIFont.systemFont(ofSize: 20)
             label.textAlignment = .center
             
             // label.translatesAutoresizingMaskIntoConstraints = falseするとUIScrollViewが真っ白になるので一旦そのままaddSubviewする
-//            label.translatesAutoresizingMaskIntoConstraints = false
+            label.translatesAutoresizingMaskIntoConstraints = false
             boxView.addSubview(label)
+            label.centerXAnchor.constraint(equalTo: boxView.centerXAnchor, constant: 0).isActive = true
+            label.topAnchor.constraint(equalTo: boxView.topAnchor, constant: 10).isActive = true
             
-//            childScrollView.translatesAutoresizingMaskIntoConstraints = false
             parentScrollView.addSubview(childScrollView)
         }
         
@@ -196,7 +204,7 @@ class CollapsingHeaderScrollViewController: UIViewController {
 // MARK: UIScrollView
 extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // UIPageViewControllerのscrollViewか、各ページ内のscrollViewかをIdで判定する
         if scrollView.accessibilityIdentifier != "OuterScrollView" {
             // UIPageViewControllerを横移動中はこの中の処理を呼ばないようにする
@@ -211,7 +219,7 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     }
     
     // ページネーション開始時に呼ばれる
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("---scrollViewWillBeginDragging---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
         
         // 前後両ページに対して位置調整を行う
@@ -226,10 +234,10 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     }
     
     // ページネーション中に指を離したら呼ばれる
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {}
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {}
     
     // ページネーション完了時に呼ばれる。
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("---scrollViewDidEndDecelerating---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
         
         // ページが切り替わったらTabViewのUIを更新する
@@ -243,4 +251,47 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
                 }
         }
     }
+}
+
+public class CollapsibleHeaderPagerViewPage {
+    var title: String
+    var view: UIView
+    
+    init(title: String, view: UIView) {
+        self.title = title
+        self.view = view
+    }
+}
+
+// MARK: CollapsingHeaderScrollViewControllerDatasource
+extension CollapsingHeaderScrollViewController: CollapsingHeaderScrollViewControllerDatasource {
+    
+    public func collapsingHeaderScrollViewController(_ viewController: CollapsingHeaderScrollViewController) -> Int {
+        return self.colors.count
+    }
+    
+    public func collapsibleHeaderScrollViewController(_ viewController: CollapsingHeaderScrollViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
+        let headerAreaHeight = headerViewHeight + tabViewHeight
+
+        return CollapsibleHeaderPagerViewPage(title: "Page \(index)",
+                                              view: UIView(frame: CGRect(x: 10, y: headerAreaHeight + 10, width: view.frame.width - 20, height: 300 * CGFloat(index + 1))))
+    }
+}
+
+public protocol CollapsingHeaderScrollViewControllerDatasource {
+    
+    /// Asks for the number of pages to display.
+    ///
+    /// - Parameter viewController: the CollapsibleHeaderScrollViewController requesting the information.
+    ///
+    /// - Returns: the number of pages to display.
+    func collapsingHeaderScrollViewController(_ viewController: CollapsingHeaderScrollViewController) -> Int
+    
+    /// Asks for the metadata of the CollapsibleHeaderPagerViewPage that will be displayed in the given N th place.
+    ///
+    /// - Parameter viewController: the CollapsibleHeaderScrollViewController requesting the information.
+    /// - Parameter index: the index referring to the N th place. (ex: index "0" corresponds to "page 1")
+    ///
+    /// - Returns: the CollapsibleHeaderPagerViewPage metadata.
+    func collapsibleHeaderScrollViewController(_ viewController: CollapsingHeaderScrollViewController, index: Int) -> CollapsibleHeaderPagerViewPage
 }
