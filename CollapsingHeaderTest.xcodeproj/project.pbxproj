@@ -12,6 +12,10 @@
 		1363D4142AB6C56300FB5911 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4132AB6C56300FB5911 /* CollectionViewCell.swift */; };
 		1363D4172AB6C5AC00FB5911 /* UIPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4162AB6C5AC00FB5911 /* UIPageViewController+.swift */; };
 		1363D41A2AB6C5E700FB5911 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4192AB6C5E700FB5911 /* TabButtonView.swift */; };
+		1363D41C2AB8190500FB5911 /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D41B2AB8190500FB5911 /* CustomHeaderView.swift */; };
+		1363D41E2AB8191300FB5911 /* CustomHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1363D41D2AB8191300FB5911 /* CustomHeaderView.xib */; };
+		1363D4202AB825B900FB5911 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D41F2AB825B900FB5911 /* UIColor+.swift */; };
+		1363D4222AB825ED00FB5911 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4212AB825ED00FB5911 /* UIScrollView+.swift */; };
 		13D468172AB5783100F5B42D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468162AB5783100F5B42D /* AppDelegate.swift */; };
 		13D468192AB5783100F5B42D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468182AB5783100F5B42D /* SceneDelegate.swift */; };
 		13D4681B2AB5783100F5B42D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D4681A2AB5783100F5B42D /* ViewController.swift */; };
@@ -26,6 +30,10 @@
 		1363D4132AB6C56300FB5911 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1363D4162AB6C5AC00FB5911 /* UIPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController+.swift"; sourceTree = "<group>"; };
 		1363D4192AB6C5E700FB5911 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
+		1363D41B2AB8190500FB5911 /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
+		1363D41D2AB8191300FB5911 /* CustomHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeaderView.xib; sourceTree = "<group>"; };
+		1363D41F2AB825B900FB5911 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		1363D4212AB825ED00FB5911 /* UIScrollView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		13D468132AB5783100F5B42D /* CollapsingHeaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollapsingHeaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D468162AB5783100F5B42D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13D468182AB5783100F5B42D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				1363D4162AB6C5AC00FB5911 /* UIPageViewController+.swift */,
+				1363D41F2AB825B900FB5911 /* UIColor+.swift */,
+				1363D4212AB825ED00FB5911 /* UIScrollView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -59,6 +69,8 @@
 			isa = PBXGroup;
 			children = (
 				1363D4192AB6C5E700FB5911 /* TabButtonView.swift */,
+				1363D41B2AB8190500FB5911 /* CustomHeaderView.swift */,
+				1363D41D2AB8191300FB5911 /* CustomHeaderView.xib */,
 			);
 			path = Parts;
 			sourceTree = "<group>";
@@ -157,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13D468232AB5783200F5B42D /* LaunchScreen.storyboard in Resources */,
+				1363D41E2AB8191300FB5911 /* CustomHeaderView.xib in Resources */,
 				13D468202AB5783200F5B42D /* Assets.xcassets in Resources */,
 				13D4681E2AB5783100F5B42D /* Main.storyboard in Resources */,
 			);
@@ -172,11 +185,14 @@
 				1363D4102AB6C49700FB5911 /* CollapsingHeaderScrollViewController.swift in Sources */,
 				13D4681B2AB5783100F5B42D /* ViewController.swift in Sources */,
 				1363D4142AB6C56300FB5911 /* CollectionViewCell.swift in Sources */,
+				1363D41C2AB8190500FB5911 /* CustomHeaderView.swift in Sources */,
+				1363D4222AB825ED00FB5911 /* UIScrollView+.swift in Sources */,
 				1363D4172AB6C5AC00FB5911 /* UIPageViewController+.swift in Sources */,
 				1363D41A2AB6C5E700FB5911 /* TabButtonView.swift in Sources */,
 				13D468172AB5783100F5B42D /* AppDelegate.swift in Sources */,
 				1363D4122AB6C51300FB5911 /* PageViewObserver.swift in Sources */,
 				13D468192AB5783100F5B42D /* SceneDelegate.swift in Sources */,
+				1363D4202AB825B900FB5911 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

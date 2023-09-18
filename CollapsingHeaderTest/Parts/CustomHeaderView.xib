@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomHeaderView" customModule="CollapsingHeaderTest" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="8ib-U1-0Ao" id="OZQ-pj-yHP"/>
+                <outlet property="label" destination="3lj-yC-5EU" id="hNE-rg-Prb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="123"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8ib-U1-0Ao">
+                    <rect key="frame" x="16" y="13" width="100" height="97.333333333333329"/>
+                    <color key="tintColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="Dpe-f4-kOc"/>
+                        <constraint firstAttribute="width" constant="100" id="MdT-xZ-eVv"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CustomView" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lj-yC-5EU">
+                    <rect key="frame" x="136" y="49" width="124.66666666666669" height="25.333333333333329"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                    <color key="textColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.up.and.line.horizontal.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tUm-sq-TJg">
+                    <rect key="frame" x="357" y="-1" width="20" height="124.66666666666667"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="7f9-j9-50g"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.4392156862745098" green="0.76470588235294112" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="3lj-yC-5EU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="42M-h3-bRX"/>
+                <constraint firstItem="tUm-sq-TJg" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="-16" id="4s5-f1-YUf"/>
+                <constraint firstItem="tUm-sq-TJg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="LuC-qK-yxl"/>
+                <constraint firstItem="8ib-U1-0Ao" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VTW-MB-Pu1"/>
+                <constraint firstItem="8ib-U1-0Ao" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="cPD-Rw-tCI"/>
+                <constraint firstAttribute="bottom" secondItem="tUm-sq-TJg" secondAttribute="bottom" id="e8W-ma-UGO"/>
+                <constraint firstItem="3lj-yC-5EU" firstAttribute="leading" secondItem="8ib-U1-0Ao" secondAttribute="trailing" constant="20" id="nDq-Ph-FRA"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="107.63358778625954" y="-1.0563380281690142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow.up.and.line.horizontal.and.arrow.down" catalog="system" width="114" height="128"/>
+        <image name="book" catalog="system" width="128" height="99"/>
+    </resources>
+</document>

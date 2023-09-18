@@ -21,11 +21,15 @@ class CollapsingHeaderScrollViewController: UIViewController {
     let parentScrollView = UIScrollView()
     
     var viewControllersArray: Array<UIViewController> = []
-    let colors: Array<UIColor> = [UIColor.red, UIColor.gray, UIColor.blue, UIColor.systemCyan]
+    let colors: Array<UIColor> = [
+        UIColor(hex: "F5D4E9"),
+        UIColor(hex: "D6D0F5"),
+        UIColor(hex: "F9F4CF"),
+        UIColor(hex: "B3DFB5")
+    ]
     
     var pageControl = UIPageControl()
     
-    let headerView = UIView()
     let headerViewHeight: CGFloat = 160
     var headerViewTopAnchor = NSLayoutConstraint()
     
@@ -35,36 +39,46 @@ class CollapsingHeaderScrollViewController: UIViewController {
     
     var isHeaderEnableToMoveWithScroll = true
     
+    let page = CollapsibleHeaderPagerViewPage(title: "page1", view: pageOneView)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let headerView = createHeaderView()
+        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
+        setup(header: headerView, headerHeight: headerView.frame.height)
+//        setup(header: headerView, headerHeight: headerView.frame.height, tabButtons: [])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        statusBarHeight = view.window!.safeAreaInsets.top
+    }
+    
+    private func createHeaderView() -> UIView {
+        let headerView = UIView()
+        // MARK: headerView
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight)
+        headerView.backgroundColor = UIColor(cgColor: CGColor(red: 0.8, green: 0.8, blue: 0.3, alpha: 1))
+        return headerView
+    }
+    
+    /// Create CollapsibleHeaderPageView
+    /// - Parameters:
+    ///     - headerView: A UIView to be set on the upside (required)
+    ///     - headerHeight: HeaderView's height (required)
+    private func setup(header: UIView, headerHeight: CGFloat) {
+        // headerView、button、[view]を渡せばセットアップしてくれるような関数にする。buttonは何も渡されなければ[view]に基づいて適当に番号を振ったボタンを渡す。
         
         // UIScrollViewを一番上に持ってくるパターン
         setupScrollView()
         
-        // MARK: headerView
-        headerView.frame = CGRect()
-        headerView.backgroundColor = UIColor(cgColor: CGColor(red: 0.8, green: 0.8, blue: 0.3, alpha: 1))
-        
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(headerView)
-        headerViewTopAnchor = headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+        header.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(header)
+        headerViewTopAnchor = header.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
         headerViewTopAnchor.isActive = true
-        headerView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        headerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        headerView.heightAnchor.constraint(equalToConstant: headerViewHeight).isActive = true
-        
-        let label = UILabel()
-        label.text = "test label"
-        label.textAlignment = .center
-        label.baselineAdjustment = .alignCenters
-        label.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            label.widthAnchor.constraint(equalTo: headerView.widthAnchor),
-            label.heightAnchor.constraint(equalTo: headerView.heightAnchor)
-        ])
+        header.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        header.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        header.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
         
         // MARK: tabView
         tabView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +91,7 @@ class CollapsingHeaderScrollViewController: UIViewController {
         view.addSubview(tabView)
         tabView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         tabView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        tabView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0).isActive = true
+        tabView.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 0).isActive = true
         tabView.heightAnchor.constraint(equalToConstant: tabViewHeight).isActive = true
         
         let button1 = TabButtonView(frame: UIView().frame)
@@ -113,12 +127,6 @@ class CollapsingHeaderScrollViewController: UIViewController {
         barView.heightAnchor.constraint(equalToConstant: 4).isActive = true
         barView.widthAnchor.constraint(equalToConstant: view.frame.width / 4).isActive = true
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        statusBarHeight = view.window!.safeAreaInsets.top
-    }
 
     // scrollViewを試すパターン☆
     private func setupScrollView() {
@@ -132,27 +140,29 @@ class CollapsingHeaderScrollViewController: UIViewController {
             let childScrollView = UIScrollView()
             childScrollView.accessibilityIdentifier = "\(index)"
             childScrollView.isPagingEnabled = false
+            childScrollView.alwaysBounceVertical = true
             childScrollView.frame = CGRect(x: view.frame.width * CGFloat(index), y: 0, width: view.frame.width, height: view.frame.height)
-            childScrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.5)
+            let headerAreaHeight = headerViewHeight + tabViewHeight
+            childScrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - 60 + 200 * CGFloat(index))
             childScrollView.delegate = self
             childScrollView.backgroundColor = .white
             
-            let boxView = UIView(frame: CGRect(x: 40, y: 10 + headerViewHeight + tabViewHeight, width: 300, height: 200))
+            let boxView = UIView(frame: CGRect(x: 40, y: 10 + headerAreaHeight, width: 300, height: view.frame.height - headerAreaHeight - 60 + 200 * CGFloat(index)))
             boxView.backgroundColor = colors[index]
 //            boxView.translatesAutoresizingMaskIntoConstraints = false
             childScrollView.addSubview(boxView)
 
-            let label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
-            label.text = "page:" + index.description
+            let label = UILabel(frame: CGRect(x: 0, y: 10, width: 300, height: 50))
+            label.text = "Page:" + index.description
             label.textColor = .black
-            label.font = UIFont.boldSystemFont(ofSize: 40)
+            label.font = UIFont.systemFont(ofSize: 20)
             label.textAlignment = .center
             
             // label.translatesAutoresizingMaskIntoConstraints = falseするとUIScrollViewが真っ白になるので一旦そのままaddSubviewする
 //            label.translatesAutoresizingMaskIntoConstraints = false
             boxView.addSubview(label)
             
-            childScrollView.translatesAutoresizingMaskIntoConstraints = false
+//            childScrollView.translatesAutoresizingMaskIntoConstraints = false
             parentScrollView.addSubview(childScrollView)
         }
         
@@ -188,7 +198,6 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // UIPageViewControllerのscrollViewか、各ページ内のscrollViewかをIdで判定する
-        debugPrint("[scrollViewDidScroll] scrollView ID: \(String(describing: scrollView.accessibilityIdentifier))")
         if scrollView.accessibilityIdentifier != "OuterScrollView" {
             // UIPageViewControllerを横移動中はこの中の処理を呼ばないようにする
             print("Inner scrollView.contentOffset: \(scrollView.contentOffset)")
@@ -196,9 +205,7 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
                 headerViewTopAnchor.constant = max(-scrollView.contentOffset.y, -headerViewHeight + statusBarHeight)
             }
         } else if scrollView.accessibilityIdentifier == "OuterScrollView" {
-            // PageViewController自体のUIQueuingScrollViewが呼ばれた時
-//            print("PageViewController's scrollView.contentOffset: \(scrollView.contentOffset)")
-//            print("pageViewController.currentPage: \(pageViewController.currentPage)")
+            // ParentScrollViewが移動中であれば移動量に合わせてTabViewのバー位置を更新する
             barViewLeftAnchor.constant = (scrollView.contentOffset.x / 4) + CGFloat(pageViewObserver.isMovingFrom) * (view.frame.width / 4)
         }
     }
@@ -206,9 +213,11 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     // ページネーション開始時に呼ばれる
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("---scrollViewWillBeginDragging---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
+        
         // 前後両ページに対して位置調整を行う
+        // 横スクロール時に元のchildScrollViewもoffsetまでスクロール位置リセットされてしまうのをフィルタリングで防ぐ
         scrollView.subviews.filter { $0.isKind(of: UIScrollView.self) }
-            .filter { $0.accessibilityIdentifier != "OuterScrollView" }
+            .filter { $0.accessibilityIdentifier != "OuterScrollView" && $0.accessibilityIdentifier != String(scrollView.currentPage - 1) }
             .forEach {
                 if let childScrollView = $0 as? UIScrollView {
                     childScrollView.setContentOffset(CGPoint(x: 0, y: -headerViewTopAnchor.constant), animated: false)
@@ -217,29 +226,21 @@ extension CollapsingHeaderScrollViewController: UIScrollViewDelegate {
     }
     
     // ページネーション中に指を離したら呼ばれる
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        print("---scrollViewWillBeginDecelerating")
-    }
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {}
     
     // ページネーション完了時に呼ばれる。
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("---scrollViewDidEndDecelerating---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
         
-        tabView.subviews.filter { $0.isKind(of: TabButtonView.self) }
-            .forEach { view in
-                if let button = view as? TabButtonView {
-                    let currentPageIndex = scrollView.currentPage - 1
-                    button.updateState(selectedIndex: currentPageIndex)
+        // ページが切り替わったらTabViewのUIを更新する
+        if scrollView.accessibilityIdentifier == "OuterScrollView" {
+            tabView.subviews.filter { $0.isKind(of: TabButtonView.self) }
+                .forEach { view in
+                    if let button = view as? TabButtonView {
+                        let currentPageIndex = scrollView.currentPage - 1
+                        button.updateState(selectedIndex: currentPageIndex)
+                    }
                 }
-            }
-    }
-}
-
-// 下記不要？
-extension UIScrollView {
-    
-    var currentPage: Int {
-        let currentPage = Int((self.contentOffset.x + (0.5 * self.bounds.width)) / self.bounds.width) + 1
-        return currentPage
+        }
     }
 }

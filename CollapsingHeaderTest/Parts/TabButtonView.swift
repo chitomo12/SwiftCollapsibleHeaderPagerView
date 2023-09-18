@@ -18,7 +18,7 @@ class TabButtonView: UIButton {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.gray, for: .normal)
         self.setTitleColor(.black, for: .selected)
-        self.setTitleColor(.white.withAlphaComponent(0.5), for: .highlighted)
+        self.setTitleColor(.gray.withAlphaComponent(0.5), for: .highlighted)
         self.tag = tag
         self.addAction(UIAction(handler: { _ in
             print("Tap Button \(self.tag)")

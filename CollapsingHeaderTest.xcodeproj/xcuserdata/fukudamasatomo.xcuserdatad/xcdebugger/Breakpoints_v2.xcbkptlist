@@ -3,4 +3,54 @@
    uuid = "C749F781-7D4F-4CCE-ABE0-16A32FFCD109"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E62BE38C-8555-4F24-AA5E-73619D06A1EB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CollapsingHeaderTest/CollapsingHeaderScrollViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "scrollViewWillBeginDragging(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E62BE38C-8555-4F24-AA5E-73619D06A1EB - aa8123deadd8c795"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CollapsingHeaderTest.CollapsingHeaderScrollViewController.scrollViewWillBeginDragging(__C.UIScrollView) -&gt; ()"
+                  moduleName = "CollapsingHeaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fukudamasatomo/programming/Swift/StudySwift/CollapsingHeaderTest/CollapsingHeaderTest/CollapsingHeaderScrollViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "948">
+               </Location>
+               <Location
+                  uuid = "E62BE38C-8555-4F24-AA5E-73619D06A1EB - 3da56ac46e1832f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIView) -&gt; Swift.Bool in CollapsingHeaderTest.CollapsingHeaderScrollViewController.scrollViewWillBeginDragging(__C.UIScrollView) -&gt; ()"
+                  moduleName = "CollapsingHeaderTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fukudamasatomo/programming/Swift/StudySwift/CollapsingHeaderTest/CollapsingHeaderTest/CollapsingHeaderScrollViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "213"
+                  endingLineNumber = "213"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
