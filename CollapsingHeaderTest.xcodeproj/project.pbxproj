@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1363D4102AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D40F2AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift */; };
-		1363D4122AB6C51300FB5911 /* PageViewObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4112AB6C51300FB5911 /* PageViewObserver.swift */; };
 		1363D4142AB6C56300FB5911 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4132AB6C56300FB5911 /* CollectionViewCell.swift */; };
 		1363D4172AB6C5AC00FB5911 /* UIPageViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4162AB6C5AC00FB5911 /* UIPageViewController+.swift */; };
 		1363D41A2AB6C5E700FB5911 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4192AB6C5E700FB5911 /* TabButtonView.swift */; };
@@ -19,9 +18,9 @@
 		1363D4252AB84CF600FB5911 /* CollapsibleHeaderPagerViewPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4242AB84CF600FB5911 /* CollapsibleHeaderPagerViewPage.swift */; };
 		1363D4272AB84D1300FB5911 /* CustomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4262AB84D1300FB5911 /* CustomContentView.swift */; };
 		1363D4292AB84D2F00FB5911 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4282AB84D2F00FB5911 /* Int+.swift */; };
+		1363D42B2AB8507A00FB5911 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D42A2AB8507A00FB5911 /* ViewController.swift */; };
 		13D468172AB5783100F5B42D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468162AB5783100F5B42D /* AppDelegate.swift */; };
 		13D468192AB5783100F5B42D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468182AB5783100F5B42D /* SceneDelegate.swift */; };
-		13D4681B2AB5783100F5B42D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D4681A2AB5783100F5B42D /* ViewController.swift */; };
 		13D4681E2AB5783100F5B42D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D4681C2AB5783100F5B42D /* Main.storyboard */; };
 		13D468202AB5783200F5B42D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13D4681F2AB5783200F5B42D /* Assets.xcassets */; };
 		13D468232AB5783200F5B42D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D468212AB5783200F5B42D /* LaunchScreen.storyboard */; };
@@ -29,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		1363D40F2AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleHeaderPagerViewController.swift; sourceTree = "<group>"; };
-		1363D4112AB6C51300FB5911 /* PageViewObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewObserver.swift; sourceTree = "<group>"; };
 		1363D4132AB6C56300FB5911 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1363D4162AB6C5AC00FB5911 /* UIPageViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController+.swift"; sourceTree = "<group>"; };
 		1363D4192AB6C5E700FB5911 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
@@ -40,10 +38,10 @@
 		1363D4242AB84CF600FB5911 /* CollapsibleHeaderPagerViewPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleHeaderPagerViewPage.swift; sourceTree = "<group>"; };
 		1363D4262AB84D1300FB5911 /* CustomContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomContentView.swift; sourceTree = "<group>"; };
 		1363D4282AB84D2F00FB5911 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		1363D42A2AB8507A00FB5911 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13D468132AB5783100F5B42D /* CollapsingHeaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollapsingHeaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D468162AB5783100F5B42D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13D468182AB5783100F5B42D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		13D4681A2AB5783100F5B42D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13D4681D2AB5783100F5B42D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		13D4681F2AB5783200F5B42D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13D468222AB5783200F5B42D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -112,9 +110,8 @@
 			children = (
 				13D468162AB5783100F5B42D /* AppDelegate.swift */,
 				13D468182AB5783100F5B42D /* SceneDelegate.swift */,
-				13D4681A2AB5783100F5B42D /* ViewController.swift */,
-				1363D4112AB6C51300FB5911 /* PageViewObserver.swift */,
 				1363D40F2AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift */,
+				1363D42A2AB8507A00FB5911 /* ViewController.swift */,
 				1363D4232AB84CED00FB5911 /* Model */,
 				1363D4182AB6C5DB00FB5911 /* Parts */,
 				1363D4152AB6C59E00FB5911 /* Extension */,
@@ -202,15 +199,14 @@
 				1363D4272AB84D1300FB5911 /* CustomContentView.swift in Sources */,
 				1363D4102AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift in Sources */,
 				1363D4252AB84CF600FB5911 /* CollapsibleHeaderPagerViewPage.swift in Sources */,
-				13D4681B2AB5783100F5B42D /* ViewController.swift in Sources */,
 				1363D4142AB6C56300FB5911 /* CollectionViewCell.swift in Sources */,
 				1363D4292AB84D2F00FB5911 /* Int+.swift in Sources */,
 				1363D41C2AB8190500FB5911 /* CustomHeaderView.swift in Sources */,
 				1363D4222AB825ED00FB5911 /* UIScrollView+.swift in Sources */,
 				1363D4172AB6C5AC00FB5911 /* UIPageViewController+.swift in Sources */,
+				1363D42B2AB8507A00FB5911 /* ViewController.swift in Sources */,
 				1363D41A2AB6C5E700FB5911 /* TabButtonView.swift in Sources */,
 				13D468172AB5783100F5B42D /* AppDelegate.swift in Sources */,
-				1363D4122AB6C51300FB5911 /* PageViewObserver.swift in Sources */,
 				13D468192AB5783100F5B42D /* SceneDelegate.swift in Sources */,
 				1363D4202AB825B900FB5911 /* UIColor+.swift in Sources */,
 			);

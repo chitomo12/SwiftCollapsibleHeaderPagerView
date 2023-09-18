@@ -28,7 +28,7 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.dataSource = self
+//        self.dataSource = self
         
         let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
         
@@ -51,7 +51,7 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
             }
         }
         
-        setup(header: headerView, headerHeight: headerView.frame.height, pages: pages)
+        setup(header: headerView, headerHeight: headerView.frame.height, pages: (dataSource?.collapsingHeaderScrollViewControllerPages())!)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -239,16 +239,22 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
 // MARK: CollapsingHeaderScrollViewControllerDatasource
 extension CollapsibleHeaderPagerViewController: CollapsibleHeaderPagerViewControllerDatasource {
     
+    public func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
+        return []
+    }
+    
     public func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
-        return pages.count
+        return viewController.pages.count
     }
     
     public func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
-        return pages[index]
+        return viewController.pages[index]
     }
 }
 
 public protocol CollapsibleHeaderPagerViewControllerDatasource {
+    
+    func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage]
     
     /// Asks for the number of pages to display.
     ///
