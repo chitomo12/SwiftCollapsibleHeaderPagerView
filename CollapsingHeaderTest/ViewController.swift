@@ -18,8 +18,6 @@ class ViewController: UIViewController {
         
         let collapsibleHeaderPagerViewController = CollapsibleHeaderPagerViewController()
         collapsibleHeaderPagerViewController.dataSource = self
-        // headerやpageは直接渡すべきか、delegate（dataSource）経由で渡すべきか？　dataSourceで渡すメリットを今のところ感じないので直接渡す方向で進めてみる
-//        collapsibleHeaderPagerViewController.set(header: CustomHeaderView(), headerHeight: 160, pages: pages)
         
         self.addChild(collapsibleHeaderPagerViewController)
         self.view.addSubview(collapsibleHeaderPagerViewController.view)
@@ -58,10 +56,10 @@ extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
     }
     
     func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
-        return viewController.pages.count
+        return self.pages.count
     }
     
     func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
-        return viewController.pages[index]
+        return self.pages[index]
     }
 }

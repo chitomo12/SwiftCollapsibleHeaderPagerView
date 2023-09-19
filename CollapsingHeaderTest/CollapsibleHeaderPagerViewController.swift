@@ -28,28 +28,7 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.dataSource = self
-        
         let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
-        
-        // Sample content UIView
-        let pages: [CollapsibleHeaderPagerViewPage] = [
-            CollapsibleHeaderPagerViewPage(title: "Page1", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 300))),
-            CollapsibleHeaderPagerViewPage(title: "Page2", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 600))),
-            CollapsibleHeaderPagerViewPage(title: "Page3", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 900))),
-            CollapsibleHeaderPagerViewPage(title: "Page4", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 1200)))
-        ]
-        let colors: Array<UIColor> = [
-            UIColor(hex: "F5D4E9"),
-            UIColor(hex: "D6D0F5"),
-            UIColor(hex: "F9F4CF"),
-            UIColor(hex: "B3DFB5")
-        ]
-        for (index, page) in pages.enumerated() {
-            if let view = page.view as? CustomContentView {
-                view.setup(color: colors[index])
-            }
-        }
         
         setup(header: headerView, headerHeight: headerView.frame.height, pages: (dataSource?.collapsingHeaderScrollViewControllerPages())!)
     }
@@ -197,7 +176,7 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
             headerViewTopAnchor.constant = max(-scrollView.contentOffset.y, -headerViewHeight + statusBarHeight)
         } else if scrollView.accessibilityIdentifier == "OuterScrollView" {
             // ParentScrollViewが移動中であれば移動量に合わせてTabViewのバー位置を更新する
-            barViewLeftAnchor.constant = (scrollView.contentOffset.x / 4)
+            barViewLeftAnchor.constant = (scrollView.contentOffset.x / pages.count.cgFloat)
         }
     }
     
@@ -253,6 +232,8 @@ extension CollapsibleHeaderPagerViewController: CollapsibleHeaderPagerViewContro
 }
 
 public protocol CollapsibleHeaderPagerViewControllerDatasource {
+    
+    // TODO: create delegate method to pass header view information
     
     func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage]
     
