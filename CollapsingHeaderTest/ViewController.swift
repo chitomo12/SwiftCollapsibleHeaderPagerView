@@ -51,6 +51,15 @@ class ViewController: UIViewController {
 
 extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
     
+    func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
+        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 160))
+        return headerView
+    }
+    
+    func collapsingHeaderScrollViewControllerHeaderHeight() -> CGFloat {
+        return 160
+    }
+    
     func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
         return self.pages
     }

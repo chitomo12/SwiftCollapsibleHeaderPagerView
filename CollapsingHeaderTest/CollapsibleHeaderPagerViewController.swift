@@ -28,9 +28,10 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight))
-        
-        setup(header: headerView, headerHeight: headerView.frame.height, pages: (dataSource?.collapsingHeaderScrollViewControllerPages())!)
+        guard let headerView = dataSource?.collapsingHeaderScrollViewControllerHeaderView(),
+              let pages = dataSource?.collapsingHeaderScrollViewControllerPages()
+        else { return }
+        setup(header: headerView, headerHeight: headerView.frame.height, pages: pages)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -38,13 +39,7 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
         statusBarHeight = view.window!.safeAreaInsets.top
     }
     
-    private func createHeaderView() -> UIView {
-        let headerView = UIView()
-        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: headerViewHeight)
-        return headerView
-    }
-    
-    /// Create CollapsibleHeaderPagerView
+    /// Set up CollapsibleHeaderPagerView
     /// - Parameters:
     ///     - headerView: A UIView to be set on the upside (required)
     ///     - headerHeight: HeaderView's height (required)
@@ -201,7 +196,6 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
     // ページネーション完了時に呼ばれる
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         print("---scrollViewDidEndDecelerating---: \(scrollView.accessibilityIdentifier ?? "")-\(scrollView.currentPage)")
-        
         // ページが切り替わったらTabViewのUIを更新する
         if scrollView.accessibilityIdentifier == "OuterScrollView" {
             tabView.subviews.filter { $0.isKind(of: TabButtonView.self) }
@@ -218,6 +212,10 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
 // MARK: CollapsingHeaderScrollViewControllerDatasource
 extension CollapsibleHeaderPagerViewController: CollapsibleHeaderPagerViewControllerDatasource {
     
+    public func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
+        return UIView()
+    }
+    
     public func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
         return []
     }
@@ -233,7 +231,7 @@ extension CollapsibleHeaderPagerViewController: CollapsibleHeaderPagerViewContro
 
 public protocol CollapsibleHeaderPagerViewControllerDatasource {
     
-    // TODO: create delegate method to pass header view information
+    func collapsingHeaderScrollViewControllerHeaderView() -> UIView
     
     func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage]
     
