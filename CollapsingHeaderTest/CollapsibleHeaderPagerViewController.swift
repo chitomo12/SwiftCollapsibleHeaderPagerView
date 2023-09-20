@@ -15,6 +15,7 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
     
     let parentScrollView = UIScrollView()
         
+    // TODO: remove headerViewHeight from this file.
     let headerViewHeight: CGFloat = 160
     var headerViewTopAnchor = NSLayoutConstraint()
     
@@ -99,6 +100,9 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
         barView.heightAnchor.constraint(equalToConstant: 4).isActive = true
         barView.widthAnchor.constraint(equalToConstant: view.frame.width / pages.count.cgFloat).isActive = true
     }
+    
+    // TODO: create set up headerView method
+    // TODO: create set up tabView method
 
     /// set up ParentScrollView and ChildScrollViews
     private func setupScrollView() {
@@ -209,25 +213,6 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
     }
 }
 
-// MARK: CollapsingHeaderScrollViewControllerDatasource
-extension CollapsibleHeaderPagerViewController: CollapsibleHeaderPagerViewControllerDatasource {
-    
-    public func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
-        return UIView()
-    }
-    
-    public func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
-        return []
-    }
-    
-    public func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
-        return viewController.pages.count
-    }
-    
-    public func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
-        return viewController.pages[index]
-    }
-}
 
 public protocol CollapsibleHeaderPagerViewControllerDatasource {
     
