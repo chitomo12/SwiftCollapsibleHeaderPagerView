@@ -76,7 +76,10 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
         // MARK: setup tabView's buttons
         for (index, _) in pages.enumerated() {
             let button = TabButtonView(frame: UIView().frame)
-            button.setup(title: "\(pages[index].title)", tag: index + 1, handler: { self.makePageMoveByTab(toIndex: index) })
+            button.setup(title: "\(pages[index].title)",
+                         tag: index + 1,
+                         selectedColor: .orange,
+                         handler: { self.makePageMoveByTab(toIndex: index) })
             tabView.addArrangedSubview(button)
             if index == 0 { button.updateState(selectedIndex: 0) }
         }
@@ -89,7 +92,8 @@ public class CollapsibleHeaderPagerViewController: UIViewController {
         
         // tabView Bar
         let barView = UIView()
-        barView.backgroundColor = .systemMint
+        let barColor = UIColor.orange
+        barView.backgroundColor = barColor
         barView.layer.cornerRadius = 2
         
         barView.translatesAutoresizingMaskIntoConstraints = false

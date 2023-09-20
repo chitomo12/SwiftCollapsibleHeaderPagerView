@@ -14,10 +14,10 @@ class TabButtonView: UIButton {
         super.init(frame: frame)
     }
     
-    func setup(title: String, tag: Int, handler: @escaping () -> Void) {
+    func setup(title: String, tag: Int, selectedColor: UIColor, handler: @escaping () -> Void) {
         self.setTitle(title, for: .normal)
         self.setTitleColor(.gray, for: .normal)
-        self.setTitleColor(.black, for: .selected)
+        self.setTitleColor(selectedColor, for: .selected)
         self.setTitleColor(.gray.withAlphaComponent(0.5), for: .highlighted)
         self.tag = tag
         self.addAction(UIAction(handler: { _ in

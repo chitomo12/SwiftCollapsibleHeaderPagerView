@@ -64,6 +64,9 @@ extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
         return self.pages
     }
     
+    // TODO: Create delegate method to provide tabBar's UIColor?
+    // TODO: Create delegate method to provide page frame height?
+    
     func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
         return self.pages.count
     }
