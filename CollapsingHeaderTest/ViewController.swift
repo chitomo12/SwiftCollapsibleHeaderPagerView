@@ -9,12 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var pages: [CollapsibleHeaderPagerViewPage] = []
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupPages()
         
         let collapsibleHeaderPagerViewController = CollapsibleHeaderPagerViewController()
         collapsibleHeaderPagerViewController.dataSource = self
@@ -23,9 +19,30 @@ class ViewController: UIViewController {
         self.view.addSubview(collapsibleHeaderPagerViewController.view)
         collapsibleHeaderPagerViewController.didMove(toParent: self)
     }
+}
+
+extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
     
-    private func setupPages() {
-        // Sample content UIView
+    func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
+        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 160))
+        
+        return headerView
+    }
+    
+    func collapsingHeaderScrollViewControllerHeaderHeight() -> CGFloat {
+        return 160
+    }
+    
+    func collapsingHeaderScrollViewControllerTabBarHeight() -> CGFloat {
+        return 50
+    }
+    
+    func collapsingHeaderScrollViewControllerPagesTabBarColor() -> UIColor {
+        return .orange
+    }
+    
+    func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
+        
         let pages: [CollapsibleHeaderPagerViewPage] = [
             CollapsibleHeaderPagerViewPage(title: "Page1", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 300))),
             CollapsibleHeaderPagerViewPage(title: "Page2", view: CustomContentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 600))),
@@ -45,33 +62,17 @@ class ViewController: UIViewController {
                 view.setup(color: colors[index])
             }
         }
-        self.pages = pages
-    }
-}
-
-extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
-    
-    func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
-        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 160))
-        return headerView
+        
+        return pages
     }
     
-    func collapsingHeaderScrollViewControllerHeaderHeight() -> CGFloat {
-        return 160
-    }
-    
-    func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage] {
-        return self.pages
-    }
-    
-    // TODO: Create delegate method to provide tabBar's UIColor?
     // TODO: Create delegate method to provide page frame height?
     
-    func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
-        return self.pages.count
-    }
+//    func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
+//        return self.collapsingHeaderScrollViewControllerPages().count
+//    }
     
-    func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
-        return self.pages[index]
-    }
+//    func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
+//        return self.collapsingHeaderScrollViewControllerPages()[index]
+//    }
 }

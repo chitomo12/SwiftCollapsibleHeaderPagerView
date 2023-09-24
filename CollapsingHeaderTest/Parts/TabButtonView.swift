@@ -10,6 +10,8 @@ import UIKit
 @IBDesignable
 class TabButtonView: UIButton {
     
+    var handler: () -> Void = {}
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -20,10 +22,15 @@ class TabButtonView: UIButton {
         self.setTitleColor(selectedColor, for: .selected)
         self.setTitleColor(.gray.withAlphaComponent(0.5), for: .highlighted)
         self.tag = tag
-        self.addAction(UIAction(handler: { _ in
-            print("Tap Button \(self.tag)")
-            handler()
-        }), for: .touchUpInside)
+        if #available(iOS 14.0, *) {
+            self.addAction(UIAction(handler: { _ in
+                print("Tap Button \(self.tag)")
+                handler()
+            }), for: .touchUpInside)
+        } else {
+            self.handler = handler
+            self.addTarget(self, action: #selector(executeHandler), for: .touchUpInside)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -32,5 +39,10 @@ class TabButtonView: UIButton {
     
     func updateState(selectedIndex: Int) {
         self.isSelected = ((selectedIndex + 1) == self.tag)
+    }
+    
+    @objc
+    func executeHandler() {
+        self.handler()
     }
 }
