@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TwitterLikeHeaderView" customModule="CollapsingHeaderTest" customModuleProvider="target">
+            <connections>
+                <outlet property="profileImageView" destination="GDS-aS-2cz" id="qVo-MW-hWY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="294"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WindowsXP" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-va-tQz">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="dnE-sy-tXG"/>
+                    </constraints>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SampleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="GDS-aS-2cz">
+                    <rect key="frame" x="16" y="85" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="1q4-LT-oZO"/>
+                        <constraint firstAttribute="height" constant="80" id="fEf-By-Jrq"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6K-Re-P0D">
+                    <rect key="frame" x="233" y="130" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="1gj-UO-2as"/>
+                        <constraint firstAttribute="width" constant="40" id="p0s-pM-qQm"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="systemCyanColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="gear" catalog="system"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nwy-fY-iQe">
+                    <rect key="frame" x="281" y="134" width="96" height="35"/>
+                    <color key="tintColor" systemColor="systemCyanColor"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="filled" title="Following" cornerStyle="capsule"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mafty Navue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AI7-hC-qCY">
+                    <rect key="frame" x="16" y="181" width="103" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An internet existence." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uO-nR-g7o">
+                    <rect key="frame" x="16" y="236" width="166" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@mafty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvE-Qd-nUm">
+                    <rect key="frame" x="16" y="206" width="53" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gh-Md-7ED">
+                    <rect key="frame" x="189" y="130" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Huo-Jk-iJo"/>
+                        <constraint firstAttribute="height" constant="40" id="dzW-gQ-nuA"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="systemCyanColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="plus.message" catalog="system"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="Sdf-va-tQz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="28q-rW-Kjl"/>
+                <constraint firstItem="wvE-Qd-nUm" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="3lu-Jx-hj0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5uO-nR-g7o" secondAttribute="bottom" constant="32" id="3p0-sh-lGl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nwy-fY-iQe" secondAttribute="trailing" constant="16" id="5Bl-RD-3kE"/>
+                <constraint firstItem="nwy-fY-iQe" firstAttribute="top" secondItem="Sdf-va-tQz" secondAttribute="bottom" constant="14" id="5GK-yA-hI7"/>
+                <constraint firstItem="GDS-aS-2cz" firstAttribute="top" secondItem="Sdf-va-tQz" secondAttribute="top" constant="85" id="5hr-zu-GUa"/>
+                <constraint firstItem="5uO-nR-g7o" firstAttribute="top" secondItem="wvE-Qd-nUm" secondAttribute="bottom" constant="12" id="CVi-gA-ZHn"/>
+                <constraint firstItem="AI7-hC-qCY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="CuZ-vc-QDT"/>
+                <constraint firstItem="J6K-Re-P0D" firstAttribute="leading" secondItem="3gh-Md-7ED" secondAttribute="trailing" constant="4" id="IyT-oY-nDt"/>
+                <constraint firstItem="wvE-Qd-nUm" firstAttribute="top" secondItem="AI7-hC-qCY" secondAttribute="bottom" constant="4" id="JeG-hg-ifG"/>
+                <constraint firstItem="Sdf-va-tQz" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="LK8-TU-ltR"/>
+                <constraint firstItem="nwy-fY-iQe" firstAttribute="leading" secondItem="J6K-Re-P0D" secondAttribute="trailing" constant="8" id="OCi-rw-7GO"/>
+                <constraint firstItem="5uO-nR-g7o" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Q9C-ch-Anh"/>
+                <constraint firstItem="AI7-hC-qCY" firstAttribute="top" secondItem="GDS-aS-2cz" secondAttribute="bottom" constant="16" id="bnv-H8-38g"/>
+                <constraint firstItem="Sdf-va-tQz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="fBz-Sh-XrM"/>
+                <constraint firstItem="GDS-aS-2cz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="iBO-sD-ii9"/>
+                <constraint firstItem="3gh-Md-7ED" firstAttribute="top" secondItem="Sdf-va-tQz" secondAttribute="bottom" constant="10" id="og3-JW-FjY"/>
+                <constraint firstItem="J6K-Re-P0D" firstAttribute="top" secondItem="Sdf-va-tQz" secondAttribute="bottom" constant="10" id="t0p-xJ-gWg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="135.1145038167939" y="-252.11267605633805"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="SampleIcon" width="272" height="244"/>
+        <image name="WindowsXP" width="1920" height="1080"/>
+        <image name="gear" catalog="system" width="128" height="122"/>
+        <image name="plus.message" catalog="system" width="128" height="116"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

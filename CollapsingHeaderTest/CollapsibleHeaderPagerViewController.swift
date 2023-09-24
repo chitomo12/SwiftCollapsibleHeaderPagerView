@@ -268,7 +268,6 @@ extension CollapsibleHeaderPagerViewController: UIScrollViewDelegate {
     }
 }
 
-
 public protocol CollapsibleHeaderPagerViewControllerDatasource {
     
     /// Asks header's UIView
@@ -283,21 +282,10 @@ public protocol CollapsibleHeaderPagerViewControllerDatasource {
     /// Asks TabBar's color
     func collapsingHeaderScrollViewControllerPagesTabBarColor() -> UIColor
     
-    /// Asks pages UIView
+    /// Asks for the pages to display.
+    ///
+    /// - Parameter viewController: the CollapsibleHeaderScrollViewController requesting the information.
+    ///
+    /// - Returns: the pages array to display.
     func collapsingHeaderScrollViewControllerPages() -> [CollapsibleHeaderPagerViewPage]
-    
-//    /// Asks for the number of pages to display.
-//    ///
-//    /// - Parameter viewController: the CollapsibleHeaderScrollViewController requesting the information.
-//    ///
-//    /// - Returns: the number of pages to display.
-//    func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int
-//
-//    /// Asks for the metadata of the CollapsibleHeaderPagerViewPage that will be displayed in the given N th place.
-//    ///
-//    /// - Parameter viewController: the CollapsibleHeaderScrollViewController requesting the information.
-//    /// - Parameter index: the index referring to the N th place. (ex: index "0" corresponds to "page 1")
-//    ///
-//    /// - Returns: the CollapsibleHeaderPagerViewPage metadata.
-//    func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage
 }

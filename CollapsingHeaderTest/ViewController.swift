@@ -24,13 +24,16 @@ class ViewController: UIViewController {
 extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
     
     func collapsingHeaderScrollViewControllerHeaderView() -> UIView {
-        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 160))
+//        let headerView = CustomHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 160))
+        let headerView = TwitterLikeHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 320))
         
         return headerView
     }
     
+    // TODO: データ内容によって高さが変わる場合の対応
+    
     func collapsingHeaderScrollViewControllerHeaderHeight() -> CGFloat {
-        return 160
+        return 320
     }
     
     func collapsingHeaderScrollViewControllerTabBarHeight() -> CGFloat {
@@ -67,12 +70,4 @@ extension ViewController: CollapsibleHeaderPagerViewControllerDatasource {
     }
     
     // TODO: Create delegate method to provide page frame height?
-    
-//    func collapsingHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController) -> Int {
-//        return self.collapsingHeaderScrollViewControllerPages().count
-//    }
-    
-//    func collapsibleHeaderScrollViewController(_ viewController: CollapsibleHeaderPagerViewController, index: Int) -> CollapsibleHeaderPagerViewPage {
-//        return self.collapsingHeaderScrollViewControllerPages()[index]
-//    }
 }

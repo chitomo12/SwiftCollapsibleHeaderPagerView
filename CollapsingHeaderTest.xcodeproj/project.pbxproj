@@ -18,6 +18,8 @@
 		1363D4272AB84D1300FB5911 /* CustomContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4262AB84D1300FB5911 /* CustomContentView.swift */; };
 		1363D4292AB84D2F00FB5911 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D4282AB84D2F00FB5911 /* Int+.swift */; };
 		1363D42B2AB8507A00FB5911 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1363D42A2AB8507A00FB5911 /* ViewController.swift */; };
+		13CCF3452AC05FCE00B6A5F6 /* TwitterLikeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13CCF3442AC05FCE00B6A5F6 /* TwitterLikeHeaderView.xib */; };
+		13CCF3472AC05FE600B6A5F6 /* TwitterLikeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CCF3462AC05FE600B6A5F6 /* TwitterLikeHeaderView.swift */; };
 		13D468172AB5783100F5B42D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468162AB5783100F5B42D /* AppDelegate.swift */; };
 		13D468192AB5783100F5B42D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D468182AB5783100F5B42D /* SceneDelegate.swift */; };
 		13D4681E2AB5783100F5B42D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D4681C2AB5783100F5B42D /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 		1363D4262AB84D1300FB5911 /* CustomContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomContentView.swift; sourceTree = "<group>"; };
 		1363D4282AB84D2F00FB5911 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		1363D42A2AB8507A00FB5911 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		13CCF3442AC05FCE00B6A5F6 /* TwitterLikeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TwitterLikeHeaderView.xib; sourceTree = "<group>"; };
+		13CCF3462AC05FE600B6A5F6 /* TwitterLikeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterLikeHeaderView.swift; sourceTree = "<group>"; };
 		13D468132AB5783100F5B42D /* CollapsingHeaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollapsingHeaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13D468162AB5783100F5B42D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13D468182AB5783100F5B42D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				1363D4192AB6C5E700FB5911 /* TabButtonView.swift */,
+				13CCF3462AC05FE600B6A5F6 /* TwitterLikeHeaderView.swift */,
+				13CCF3442AC05FCE00B6A5F6 /* TwitterLikeHeaderView.xib */,
 				1363D41B2AB8190500FB5911 /* CustomHeaderView.swift */,
 				1363D41D2AB8191300FB5911 /* CustomHeaderView.xib */,
 				1363D4262AB84D1300FB5911 /* CustomContentView.swift */,
@@ -182,6 +188,7 @@
 				13D468232AB5783200F5B42D /* LaunchScreen.storyboard in Resources */,
 				1363D41E2AB8191300FB5911 /* CustomHeaderView.xib in Resources */,
 				13D468202AB5783200F5B42D /* Assets.xcassets in Resources */,
+				13CCF3452AC05FCE00B6A5F6 /* TwitterLikeHeaderView.xib in Resources */,
 				13D4681E2AB5783100F5B42D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -196,6 +203,7 @@
 				1363D4272AB84D1300FB5911 /* CustomContentView.swift in Sources */,
 				1363D4102AB6C49700FB5911 /* CollapsibleHeaderPagerViewController.swift in Sources */,
 				1363D4252AB84CF600FB5911 /* CollapsibleHeaderPagerViewPage.swift in Sources */,
+				13CCF3472AC05FE600B6A5F6 /* TwitterLikeHeaderView.swift in Sources */,
 				1363D4292AB84D2F00FB5911 /* Int+.swift in Sources */,
 				1363D41C2AB8190500FB5911 /* CustomHeaderView.swift in Sources */,
 				1363D4222AB825ED00FB5911 /* UIScrollView+.swift in Sources */,
